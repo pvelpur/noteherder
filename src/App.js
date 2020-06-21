@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import base from './base'
 
 import './App.css'
 import Main from './Main'
@@ -16,6 +17,14 @@ class App extends Component {
       notes: {},
       currentNote: this.blankNote(),
     }
+  }
+
+  //react lifecycle methods
+  componentDidMount(){
+    base.syncState(`notes`, {
+      context: this, // what object the state is on
+      state: 'notes', //which property to sync
+    })
   }
 
   //arrow functions bind 'this' (property initializer)
@@ -61,7 +70,9 @@ class App extends Component {
 
   removeCurrentNote = () => {
     const notes = {...this.state.notes}
-    delete notes[this.state.currentNote.id]
+    // delete notes[this.state.currentNote.id] //this is the right way to do it without firebase
+    //with firebase
+    notes[this.state.currentNote.id] = null
     this.setState({notes})
     this.resetCurrentNote()
   }

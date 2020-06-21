@@ -28,6 +28,9 @@
     font-size: 2rem;
     margin: 0;
   }
+  .NoteForm button i.fa:hover {
+    cursor: pointer;
+  }
   .NoteForm form {
     margin: 0 auto;
     max-width: 80rem;
