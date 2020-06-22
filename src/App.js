@@ -16,7 +16,7 @@ class App extends Component {
 
     this.state = {
       notes: {},
-      currentNote: this.blankNote(),
+      currentNoteId: null,
       uid: null,
     }
   }
@@ -52,21 +52,11 @@ class App extends Component {
 
   //arrow functions bind 'this' (property initializer)
   setCurrentNote = (note) => {
-    this.setState({currentNote:note})
-  }
-
-
-  //Function to clear out form
-  blankNote = () => {
-    return {
-        id: null,
-        title: '',
-        body: '',
-      }
+    this.setState({currentNoteId:note.id})
   }
 
   resetCurrentNote = () => {
-    this.setCurrentNote(this.blankNote())
+    this.setCurrentNote({id: null})
   }
 
   // Add a new note to this.state
@@ -95,7 +85,7 @@ class App extends Component {
     const notes = {...this.state.notes}
     // delete notes[this.state.currentNote.id] //this is the right way to do it without firebase
     //with firebase
-    notes[this.state.currentNote.id] = null
+    notes[this.state.currentNoteId] = null
     this.setState({notes})
     this.resetCurrentNote()
   }
@@ -138,7 +128,7 @@ class App extends Component {
         {this.signedIn() ? 
           <Main 
             notes={this.state.notes} 
-            currentNote={this.state.currentNote}
+            currentNoteId={this.state.currentNoteId}
             {...actions} //passes in both of the props (spread syntax)
           /> : <SignIn />
         }
