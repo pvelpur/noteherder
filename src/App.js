@@ -34,8 +34,8 @@ class App extends Component {
       }
     })
   }
-
-  componentDidMount(){
+  //react lifecycle method
+  syncNotes = () => {
     base.syncState(`notes`, {
       context: this, // what object the state is on
       state: 'notes', //which property to sync
@@ -97,7 +97,7 @@ class App extends Component {
   }
 
   handleAuth = (user) => {
-    this.setState({uid: user.uid})
+    this.setState({uid: user.uid}, this.syncNotes) //calls syncNotes after it finishes setting the state
   }
 
   signOut = () => {
