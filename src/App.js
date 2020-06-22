@@ -22,6 +22,19 @@ class App extends Component {
   }
 
   //react lifecycle methods
+  componentWillMount(){
+    auth.onAuthStateChanged((user) => {
+      if(user){
+        //signed in
+        this.handleAuth(user)
+      }
+      else{
+        //signed out
+        this.setState({uid: null})
+      }
+    })
+  }
+
   componentDidMount(){
     base.syncState(`notes`, {
       context: this, // what object the state is on
@@ -83,14 +96,13 @@ class App extends Component {
     return this.state.uid
   }
 
-  handleAuth = (result) => {
-    this.setState({uid: result.user.uid})
+  handleAuth = (user) => {
+    this.setState({uid: user.uid})
   }
 
   signOut = () => {
-    auth.signOut()
-      .then(() => this.setState({uid: null}))
-      .catch((e) => console.log(e));
+    auth.signOut() 
+      //.then(() => this.setState({uid: null})) // signing out is a change to the auth state
   }
 
   render() {
@@ -109,7 +121,7 @@ class App extends Component {
             notes={this.state.notes} 
             currentNote={this.state.currentNote}
             {...actions} //passes in both of the props (spread syntax)
-          /> : <SignIn handleAuth={this.handleAuth}/>
+          /> : <SignIn />
         }
         
       </div>

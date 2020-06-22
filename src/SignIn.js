@@ -3,12 +3,12 @@ import React from 'react'
 import './SignIn.css'
 import {auth, googleProvider} from './base'
 
-const SignIn = ({ handleAuth }) => {
+const SignIn = () => {
 
     const authenticate = () => {
         auth
             .signInWithPopup(googleProvider)
-            .then(handleAuth)
+            //.then(handleAuth) // dont need this with lifecycle method (onAuthStateChanged)
     }
 
     return (
