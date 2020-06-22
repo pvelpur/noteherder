@@ -3,6 +3,7 @@ import base from './base'
 
 import './App.css'
 import Main from './Main'
+import SignIn from './SignIn'
 
 // We set the initial state for a component through the constructor
 // we make changes to it by setState
@@ -16,6 +17,7 @@ class App extends Component {
     this.state = {
       notes: {},
       currentNote: this.blankNote(),
+      uid: null,
     }
   }
 
@@ -77,21 +79,37 @@ class App extends Component {
     this.resetCurrentNote()
   }
 
+  signedIn = () => {
+    return this.state.uid
+  }
+
+  handleAuth = () => {
+    this.setState({uid: 'pvelpur'})
+  }
+
+  signOut = () => {
+    this.setState({uid: null})
+  }
+
   render() {
     const actions = {
       setCurrentNote: this.setCurrentNote,
       resetCurrentNote: this.resetCurrentNote,
       saveNote: this.saveNote,
-      removeCurrentNote: this.removeCurrentNote
+      removeCurrentNote: this.removeCurrentNote,
+      signOut: this.signOut
     }
 
     return (
       <div className="App">
-        <Main 
-          notes={this.state.notes} 
-          currentNote={this.state.currentNote}
-          {...actions} //passes in both of the props (spread syntax)
-        />
+        {this.signedIn() ? 
+          <Main 
+            notes={this.state.notes} 
+            currentNote={this.state.currentNote}
+            {...actions} //passes in both of the props (spread syntax)
+          /> : <SignIn handleAuth={this.handleAuth}/>
+        }
+        
       </div>
     )
   }
