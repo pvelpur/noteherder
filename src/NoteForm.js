@@ -1,8 +1,24 @@
 import React, { Component } from 'react'
+import RichTextEditor from 'react-rte'
 
 import './NoteForm.css'
 
 class NoteForm extends Component {
+    constructor(props) {
+        super(props)
+        
+        this.state = {
+            editorValue: RichTextEditor.createEmptyValue(),
+        }
+    }
+
+    // componentWillReceiveProps = (nextProps) => {
+    //     console.log({
+    //         currentProps: this.props,
+    //         nextProps
+    //     })
+    // }
+
     //Can lookup controlled vs uncontrolled (keyword ref) inputs => we are using controlled
 
     handleChanges = (ev) => {
@@ -12,6 +28,13 @@ class NoteForm extends Component {
         //Note is a object and ev.target.name is a string so need to use []
         note[ev.target.name] = ev.target.value
         //Save the note to notelist
+        this.props.saveNote(note)
+    }
+
+    handleEditorChanges = (editorValue) => {
+        this.setState({ editorValue })
+        const note = {...this.props.currentNote} // Grab a copy of currentNote
+        note.body = editorValue.toString('html')
         this.props.saveNote(note)
     }
 
@@ -40,11 +63,11 @@ class NoteForm extends Component {
                         />
                     </p>
                     
-                    <textarea 
+                    <RichTextEditor 
                         name="body"
-                        value={currentNote.body}
-                        onChange={this.handleChanges}
-                    ></textarea>
+                        value={this.state.editorValue}
+                        onChange={this.handleEditorChanges}
+                    ></RichTextEditor >
                 </form>
             </div>
         )
