@@ -23,8 +23,10 @@ const Note = ({note, setCurrentNote}) => {
                     <div className="note-title">
                         {note.title}
                     </div>
-                    <div className="note-body">
-                        <p> {note.body} </p>
+                    <div 
+                        className="note-body"
+                        dangerouslySetInnerHTML={{ __html: note.body }} //lol, this is because of the rich text editor stores as html
+                    >
                     </div>
                 </div>
             </li>

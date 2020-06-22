@@ -60,7 +60,7 @@ class NoteForm extends Component {
 
     render() {
 
-        const {currentNote} = this.props
+        //const {currentNote} = this.props
 
         return (
             <div className="NoteForm">
