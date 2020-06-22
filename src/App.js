@@ -30,13 +30,14 @@ class App extends Component {
       }
       else{
         //signed out
-        this.setState({uid: null})
+        //this.setState({uid: null})
+        this.handleUnauth();
       }
     })
   }
   //react lifecycle method
   syncNotes = () => {
-    base.syncState(`notes`, {
+    this.bindingRef = base.syncState(`notes/${this.state.uid}`, {
       context: this, // what object the state is on
       state: 'notes', //which property to sync
     })
@@ -98,6 +99,15 @@ class App extends Component {
 
   handleAuth = (user) => {
     this.setState({uid: user.uid}, this.syncNotes) //calls syncNotes after it finishes setting the state
+  }
+
+  handleUnauth = () => {
+    if(this.bindingRef){
+      base.removeBinding(this.bindingRef)
+    }
+
+    this.setState({uid: null, notes: {}})
+    this.resetCurrentNote()
   }
 
   signOut = () => {
