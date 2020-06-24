@@ -3,13 +3,13 @@ import React from 'react'
 import './SignIn.css'
 import quill from './quill.svg'
 import googleLogo from './google.svg'
-import {auth, googleProvider} from './base'
+import {auth, googleProvider, githubProvider} from './base'
 
 const SignIn = () => {
 
-    const authenticate = () => {
+    const authenticate = (provider) => {
         auth
-            .signInWithPopup(googleProvider)
+            .signInWithPopup(provider)
             //.then(handleAuth) // dont need this with lifecycle method (onAuthStateChanged)
     }
 
@@ -28,7 +28,7 @@ const SignIn = () => {
                 </button>
                 <button 
                     className="google" 
-                    onClick={authenticate}
+                    onClick={authenticate(googleProvider)}
                 >
                     <img src={googleLogo} alt="" />
                     Sign in with Google
