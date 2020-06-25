@@ -8,8 +8,7 @@ import {auth, googleProvider, githubProvider} from './base'
 const SignIn = () => {
 
     const authenticate = (provider) => {
-        auth
-            .signInWithPopup(provider)
+        auth.signInWithPopup(provider)
             //.then(handleAuth) // dont need this with lifecycle method (onAuthStateChanged)
     }
 
@@ -28,7 +27,7 @@ const SignIn = () => {
                 </button>
                 <button 
                     className="google" 
-                    onClick={authenticate(googleProvider)}
+                    onClick={() => authenticate(googleProvider)}
                 >
                     <img src={googleLogo} alt="" />
                     Sign in with Google

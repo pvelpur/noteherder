@@ -23,7 +23,7 @@ class NoteForm extends Component {
     }
 
     //Whenever we are about to receive new props
-    componentWillReceiveProps = (nextProps) => {
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
         const nextId = nextProps.currentNoteId
 
         //Need the 'or' in case we delete a note and the nextid is null

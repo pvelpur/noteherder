@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import base, {auth} from './base'
-import {Route, Switch} from 'react-router-dom'
+import {Route, Switch, Redirect} from 'react-router-dom'
 
 import './App.css'
 import Main from './Main'
@@ -127,15 +127,24 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-          <Route path="/sign-in" component={SignIn} />
+          <Route 
+            path="/sign-in"
+            render={() => (
+              this.signedIn()
+                ? <Redirect to="/notes" />
+                : <SignIn />
+            )}
+          />
           <Route 
             path='/notes' 
             render={() => (
-              <Main 
-                notes={this.state.notes} 
-                currentNoteId={this.state.currentNoteId}
-                {...actions} //passes in both of the props (spread syntax)
-              />
+              this.signedIn()
+                ? <Main 
+                    notes={this.state.notes} 
+                    currentNoteId={this.state.currentNoteId}
+                    {...actions} //passes in both of the props (spread syntax)
+                  />
+                : <Redirect to="/sign-in"/>
             )}
           />
         </Switch>
