@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import base, {auth} from './base'
+import {Route, Switch} from 'react-router-dom'
 
 import './App.css'
 import Main from './Main'
@@ -22,7 +23,7 @@ class App extends Component {
   }
 
   //react lifecycle methods
-  componentWillMount(){
+  UNSAFE_componentWillMount(){
     this.getUserFromLocalStorage()
     auth.onAuthStateChanged((user) => {
       if(user){
@@ -125,13 +126,27 @@ class App extends Component {
 
     return (
       <div className="App">
-        {this.signedIn() ? 
+        <Switch>
+          <Route path="/sign-in" component={SignIn} />
+          <Route 
+            path='/notes' 
+            render={() => (
+              <Main 
+                notes={this.state.notes} 
+                currentNoteId={this.state.currentNoteId}
+                {...actions} //passes in both of the props (spread syntax)
+              />
+            )}
+          />
+        </Switch>
+        
+        {/* {this.signedIn() ? 
           <Main 
             notes={this.state.notes} 
             currentNoteId={this.state.currentNoteId}
             {...actions} //passes in both of the props (spread syntax)
           /> : <SignIn />
-        }
+        } */}
         
       </div>
     )
