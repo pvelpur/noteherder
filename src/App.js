@@ -18,6 +18,7 @@ class App extends Component {
     this.state = {
       notes: {},
       uid: null,
+      firebaseNotesSynced: false, // haven't synced at start (cuz firebase takes a little bit of time)
     }
   }
 
@@ -47,6 +48,7 @@ class App extends Component {
     this.bindingRef = base.syncState(`notes/${this.state.uid}`, {
       context: this, // what object the state is on
       state: 'notes', //which property to sync
+      then: () => this.setState({firebaseNotesSynced: true}),
     })
   }
 
@@ -88,7 +90,7 @@ class App extends Component {
 
     this.setState({notes})
     //this.resetCurrentNote()
-    this.props.history.push(`/notes`) //with routing, automatically clears form
+    this.props.history.replace(`/notes`) //with routing, automatically clears form
   }
 
   signedIn = () => {
@@ -138,7 +140,8 @@ class App extends Component {
             render={() => (
               this.signedIn()
                 ? <Main 
-                    notes={this.state.notes} 
+                    notes={this.state.notes}
+                    firebaseNotesSynced={this.state.firebaseNotesSynced} 
                     {...actions} //passes in both of the props (spread syntax)
                   />
                 : <Redirect to="/sign-in"/>

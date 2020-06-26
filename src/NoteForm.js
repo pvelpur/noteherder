@@ -25,9 +25,14 @@ class NoteForm extends Component {
     //Whenever we are about to receive new props
     UNSAFE_componentWillReceiveProps = (nextProps) => {
         //const nextId = nextProps.currentNoteId
-        const nextId = nextProps.match.params.id
+        const idFromUrl = nextProps.match.params.id
         //Need the 'or' in case we delete a note and the nextid is null
-        const note = nextProps.notes[nextId] || this.blankNote() // if first case is satisfied it won't even check the second
+        const note = nextProps.notes[idFromUrl] || this.blankNote() // if first case is satisfied it won't even check the second
+
+        // id found from url but no note found with that url id
+        if(idFromUrl && !note.id && nextProps.firebaseNotesSynced) {
+            this.props.history.replace('/notes')
+        }
 
         let rteValue = this.state.rteValue
         if(rteValue.toString('html') !== note.body) {
