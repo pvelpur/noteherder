@@ -2,6 +2,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Quill graphic by Icon Solid from the [Noun Project](https://thenounproject.com/).
 
+## Getting Started
+
+Copy `src/base-example.js` tp `src/base.js` and fill in your Firebase config details
+
+Ryn `yarn install` (or `npm install`) and `yarn start` or `npm start`
+
+### Deployment
+
+Run `yarn deploy` (or `npm run deploy`) to deploy the app to Firebase.
+
+**NOTE**: This requires the Firebase command-line tools to be installed globally. Run `npm install -g firebase-tools` to install them.
+
+
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
