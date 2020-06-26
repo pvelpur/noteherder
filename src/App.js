@@ -147,6 +147,9 @@ class App extends Component {
                 : <Redirect to="/sign-in"/>
             )}
           />
+          <Route 
+            render={() => <Redirect to="/notes"/>}
+          />
         </Switch>
         
         {/* {this.signedIn() ? 
