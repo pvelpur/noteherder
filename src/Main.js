@@ -22,7 +22,7 @@ const Main = (props) => {
             />
             <NoteList 
                 notes={props.notes}
-                setCurrentNote={props.setCurrentNote}
+                //setCurrentNote={props.setCurrentNote}
             />
 
             <Switch>
