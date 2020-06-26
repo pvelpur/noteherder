@@ -24,8 +24,8 @@ class NoteForm extends Component {
 
     //Whenever we are about to receive new props
     UNSAFE_componentWillReceiveProps = (nextProps) => {
-        const nextId = nextProps.currentNoteId
-
+        //const nextId = nextProps.currentNoteId
+        const nextId = nextProps.match.params.id
         //Need the 'or' in case we delete a note and the nextid is null
         const note = nextProps.notes[nextId] || this.blankNote() // if first case is satisfied it won't even check the second
 
