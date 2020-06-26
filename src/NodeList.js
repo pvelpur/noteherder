@@ -16,7 +16,7 @@ const NoteList = ({ notes }) => {
           <ul id="notes">
             {noteIds.map((noteId) => (
                 <Note 
-                    // setCurrentNote={setCurrentNote} 
+                    
                     key={noteId} 
                     note={notes[noteId]}
                 />

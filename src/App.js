@@ -17,7 +17,6 @@ class App extends Component {
 
     this.state = {
       notes: {},
-      currentNoteId: null,
       uid: null,
     }
   }
@@ -52,13 +51,6 @@ class App extends Component {
   }
 
   //arrow functions bind 'this' (property initializer)
-  setCurrentNote = (note) => {
-    this.setState({currentNoteId:note.id})
-  }
-
-  resetCurrentNote = () => {
-    this.setCurrentNote({id: null})
-  }
 
   // Add a new note to this.state
   // objects are pass and asign by reference (setting var equal to something will be ref and will modify the original not make copy)
@@ -88,13 +80,15 @@ class App extends Component {
     }
   }
 
-  removeCurrentNote = () => {
-    const notes = {...this.state.notes}
+  removeNote = (note) => {
+    const notes = {...this.state.notes} //get a copy
     // delete notes[this.state.currentNote.id] //this is the right way to do it without firebase
     //with firebase
-    notes[this.state.currentNoteId] = null
+    notes[note.id] = null
+
     this.setState({notes})
-    this.resetCurrentNote()
+    //this.resetCurrentNote()
+    this.props.history.push(`/notes`) //with routing, automatically clears form
   }
 
   signedIn = () => {
@@ -113,7 +107,7 @@ class App extends Component {
     }
 
     this.setState({uid: null, notes: {}})
-    this.resetCurrentNote()
+    //this.resetCurrentNote()
   }
 
   signOut = () => {
@@ -123,10 +117,8 @@ class App extends Component {
 
   render() {
     const actions = {
-      //setCurrentNote: this.setCurrentNote,
-      //resetCurrentNote: this.resetCurrentNote,
       saveNote: this.saveNote,
-      removeCurrentNote: this.removeCurrentNote,
+      removeNote: this.removeNote,
       signOut: this.signOut
     }
 
@@ -147,7 +139,6 @@ class App extends Component {
               this.signedIn()
                 ? <Main 
                     notes={this.state.notes} 
-                    currentNoteId={this.state.currentNoteId}
                     {...actions} //passes in both of the props (spread syntax)
                   />
                 : <Redirect to="/sign-in"/>
