@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 import './Sidebar.css'
 //using webpack for images (this way we can import images) 
@@ -6,17 +7,16 @@ import quill from './quill.svg'
 import newHover from './new-hover.png'
 import newIcon from './new.png'
 
-const Sidebar = ({resetCurrentNote, signOut}) => {
+const Sidebar = ({signOut}) => {
     // ClassName for jsx (not a thing in html)
     return (
         <nav className="Sidebar">
             <div className="logo">
                 <img src={quill} alt="Noteherder" />
             </div>
-            <a 
+            <Link 
                 className="new-note"
-                onClick = {resetCurrentNote}
-                href= '/#'
+                to='/notes'
             >
                 <img 
                     src={newHover} 
@@ -27,7 +27,7 @@ const Sidebar = ({resetCurrentNote, signOut}) => {
                     src={newIcon} 
                     alt="New note"
                 />
-            </a>
+            </Link>
             <div className="SignOut">
                 <button onClick={signOut}>
                     <i className="fa fa-sign-out"></i>
