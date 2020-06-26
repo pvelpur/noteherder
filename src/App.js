@@ -67,8 +67,11 @@ class App extends Component {
       //Use spread syntax
     const notes = {...this.state.notes} // applied to arrays as well
 
+    let shouldRedirect = false
+
     if(!note.id) {
       note.id = Date.now()
+      shouldRedirect = true
     }
 
     // modify the notes to have more
@@ -79,7 +82,10 @@ class App extends Component {
     this.setState({notes})
 
     //set current note to the one being saved so it doesnt make a new id every time a key is pressed
-    this.setCurrentNote(note)
+    //this.setCurrentNote(note)
+    if(shouldRedirect) {
+      this.props.history.push(`/notes/${note.id}`)
+    }
   }
 
   removeCurrentNote = () => {
