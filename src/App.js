@@ -57,6 +57,7 @@ class App extends Component {
   // Add a new note to this.state
   // objects are pass and asign by reference (setting var equal to something will be ref and will modify the original not make copy)
   saveNote = (note) => {
+    const timestamp = Date.now()
     // get a copy of notes
       //Use spread syntax
     const notes = {...this.state.notes} // applied to arrays as well
@@ -64,9 +65,11 @@ class App extends Component {
     let shouldRedirect = false
 
     if(!note.id) {
-      note.id = Date.now()
+      note.id = timestamp
       shouldRedirect = true
     }
+
+    note.updatedAt = timestamp
 
     // modify the notes to have more
       //not an array so cant use push
